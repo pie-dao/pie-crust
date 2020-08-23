@@ -14,7 +14,7 @@ const config = {
     },
   },
   solc: {
-    version: '0.6.4',
+    version: '0.4.24',
     optimizer: {
       enabled: true,
       runs: 200

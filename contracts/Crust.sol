@@ -17,12 +17,9 @@ contract Crust is IMiniMeToken {
     }
 
     function balanceOf(address _account) external view returns(uint256) {
-        uint256 result = 0;
-        for(uint256 i = 0; i < crumbs.length; i++) {
-            result = result.add(crumbs[i].balanceOf(_account));
-        }
-        return result;
+        return this.balanceOfAt(_account, block.number);
     }
+
     function balanceOfAt(address _account, uint256 _block) external view returns(uint256) {
         uint256 result = 0;
         for(uint256 i = 0; i < crumbs.length; i++) {
@@ -30,13 +27,11 @@ contract Crust is IMiniMeToken {
         }
         return result;
     }
+
     function totalSupply() external view returns(uint256) {
-        uint256 result = 0;
-        for(uint256 i = 0; i < crumbs.length; i++) {
-            result = result.add(crumbs[i].totalSupply());
-        }
-        return result;
+        return this.totalSupplyAt(block.number);
     }
+
     function totalSupplyAt(uint256 _block) external view returns(uint256) {
         uint256 result = 0;
         for(uint256 i = 0; i < crumbs.length; i++) {

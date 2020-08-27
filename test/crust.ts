@@ -44,7 +44,7 @@ describe("VestedTokenMigration", function () {
             true
         );
 
-        crust = await (deployContract(signers[0], CrustArtifact, [[token0.address, token1.address]])) as Crust;
+        crust = await (deployContract(signers[0], CrustArtifact, [[token0.address, token1.address], "CRUST", "CST", 18])) as Crust;
     });
 
     it("Test balance of", async() => {
@@ -118,4 +118,9 @@ describe("VestedTokenMigration", function () {
         // the total supply is also uint128 :thinking_face:
         await expect(token0.generateTokens(await signers[1].getAddress(), 1)).to.be.reverted;
     });
+    it("Test erc20 data", async() => {
+        expect(await crust.decimals()).to.be.eq(18);
+        expect(await crust.name()).to.be.eq("CRUST");
+        expect(await crust.symbol()).to.be.eq("CST");
+    })
 });

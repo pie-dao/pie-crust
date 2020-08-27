@@ -8,12 +8,30 @@ import "./interfaces/IMiniMeToken.sol";
 contract Crust is IMiniMeToken {
     using SafeMath for uint256;
     IMiniMeToken[] public crumbs;
+    string public name;
+    string public symbol;
+    uint8 public decimals;
 
-    constructor(address[] memory _crumbs) public {
+    constructor(address[] memory _crumbs, string _name, string _symbol, uint8 _decimals) public {
         require(_crumbs.length > 0, "Crust.constructor: Crust must at least have one crumb");
         for(uint256 i = 0; i < _crumbs.length; i ++) {
             crumbs.push(IMiniMeToken(_crumbs[i]));
         }
+        name = _name;
+        symbol = _symbol;
+        decimals = _decimals;
+    }
+
+    function name() public view returns (string) {
+        return name;
+    }
+
+    function symbol() public view returns (string) {
+        return symbol;
+    }
+
+    function decimals() public view returns (uint8) {
+        return decimals;
     }
 
     function balanceOf(address _account) external view returns(uint256) {

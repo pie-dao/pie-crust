@@ -1,7 +1,7 @@
 import { usePlugin, task, types } from  "@nomiclabs/buidler/config";
 import { ArgumentType } from "@nomiclabs/buidler/internal/core/params/argumentTypes";
 import { Crust } from "./typechain/Crust";
-import { CrustFactory } from "./typechain";
+import { CrustFactory } from "./typechain/CrustFactory";
 
 usePlugin("@nomiclabs/buidler-ethers");
 
@@ -31,9 +31,16 @@ const config = {
 task("deploy-crust", "Deploys the Crust contract")
   .addParam("token0", "token0", null, types.string)
   .addParam("token1", "token1", null, types.string)
+  .addParam("name")
+  .addParam("symbol")
   .setAction(async (taskArgs, {ethers}) => {
     const signers = await ethers.getSigners();
-    const crust: Crust = await (new CrustFactory(signers[0])).deploy([taskArgs.token0, taskArgs.token1]);
+    const crust: Crust = await (new CrustFactory(signers[0])).deploy(
+      [taskArgs.token0, taskArgs.token1],
+      taskArgs.name,
+      taskArgs.symbol,
+      18
+    );
     console.log(`Deployed crust at: ${crust.address}`);
 
     return crust;

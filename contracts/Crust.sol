@@ -22,22 +22,45 @@ contract Crust is IMiniMeToken {
         decimals = _decimals;
     }
 
+    /**
+    * @notice Tells the name of the token.
+    * @return The name of the token.
+    */
     function name() public view returns (string) {
         return name;
     }
 
+    /**
+    * @notice Tells the symbol of the token.
+    * @return The symbol of the token.
+    */
     function symbol() public view returns (string) {
         return symbol;
     }
 
+    /**
+    * @notice Tells the amount of decimals used by the token.
+    * @return The amount of decimals used.
+    */
     function decimals() public view returns (uint8) {
         return decimals;
     }
 
+    /**
+    * @notice Tells the balance of `_account`.
+    * @param _account Address of the account.
+    * @return The balance of the account.
+    */
     function balanceOf(address _account) external view returns(uint256) {
         return this.balanceOfAt(_account, block.number);
     }
 
+    /**
+    * @notice Tells the balance of `_account` at block `_block`.
+    * @param _account Address of the account.
+    * @param _block Block number.
+    * @return The balance of the account.
+    */
     function balanceOfAt(address _account, uint256 _block) external view returns(uint256) {
         uint256 result = 0;
         for(uint256 i = 0; i < crumbs.length; i++) {
@@ -46,10 +69,18 @@ contract Crust is IMiniMeToken {
         return result;
     }
 
+    /**
+    * @notice Tells the total supply of this token.
+    * @return The total supply.
+    */
     function totalSupply() external view returns(uint256) {
         return this.totalSupplyAt(block.number);
     }
 
+    /**
+    * @notice Tells the total supply of this token at block `_block`.
+    * @return The total supply.
+    */
     function totalSupplyAt(uint256 _block) external view returns(uint256) {
         uint256 result = 0;
         for(uint256 i = 0; i < crumbs.length; i++) {

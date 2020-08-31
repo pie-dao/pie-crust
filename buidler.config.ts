@@ -4,6 +4,7 @@ import { Crust } from "./typechain/Crust";
 import { CrustFactory } from "./typechain/CrustFactory";
 
 usePlugin("@nomiclabs/buidler-ethers");
+usePlugin('solidity-coverage')
 
 const config = {
   defaultNetwork: 'buidlerevm',
@@ -14,6 +15,9 @@ const config = {
     },
     localhost: {
       url: 'http://localhost:8545'
+    },
+    coverage: {
+      url: 'http://localhost:8555'
     },
     frame: {
       url: "http://localhost:1248"

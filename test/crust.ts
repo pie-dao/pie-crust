@@ -17,7 +17,7 @@ let token0: MiniMeToken;
 let token1: MiniMeToken;
 let crust: Crust;
 
-describe("VestedTokenMigration", function () {
+describe("Pie Crust", function () {
     before(async() => {
         signers = await ethers.getSigners();
         account = await signers[0].getAddress();

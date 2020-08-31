@@ -1,9 +1,10 @@
 import { usePlugin, task, types } from  "@nomiclabs/buidler/config";
 import { ArgumentType } from "@nomiclabs/buidler/internal/core/params/argumentTypes";
 import { Crust } from "./typechain/Crust";
-import { CrustFactory } from "./typechain";
+import { CrustFactory } from "./typechain/CrustFactory";
 
 usePlugin("@nomiclabs/buidler-ethers");
+usePlugin('solidity-coverage')
 
 const config = {
   defaultNetwork: 'buidlerevm',
@@ -15,6 +16,9 @@ const config = {
     localhost: {
       url: 'http://localhost:8545'
     },
+    coverage: {
+      url: 'http://localhost:8555'
+    },
     frame: {
       url: "http://localhost:1248"
     }
@@ -22,7 +26,7 @@ const config = {
   solc: {
     version: '0.4.24',
     optimizer: {
-      enabled: true,
+      enabled: false,
       runs: 200
     }
   },
@@ -31,9 +35,16 @@ const config = {
 task("deploy-crust", "Deploys the Crust contract")
   .addParam("token0", "token0", null, types.string)
   .addParam("token1", "token1", null, types.string)
+  .addParam("name")
+  .addParam("symbol")
   .setAction(async (taskArgs, {ethers}) => {
     const signers = await ethers.getSigners();
-    const crust: Crust = await (new CrustFactory(signers[0])).deploy([taskArgs.token0, taskArgs.token1]);
+    const crust: Crust = await (new CrustFactory(signers[0])).deploy(
+      [taskArgs.token0, taskArgs.token1],
+      taskArgs.name,
+      taskArgs.symbol,
+      18
+    );
     console.log(`Deployed crust at: ${crust.address}`);
 
     return crust;

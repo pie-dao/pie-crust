@@ -22,6 +22,8 @@ let token1: MiniMeToken;
 let crust: Crust;
 
 describe("Pie Crust", function () {
+    this.timeout(300000);
+
     before(async() => {
         signers = await ethers.getSigners();
         account = await signers[0].getAddress();
@@ -51,10 +53,11 @@ describe("Pie Crust", function () {
         crust = await (deployContract(signers[0], CrustArtifact, [[token0.address, token1.address], "CRUST", "CST", 18])) as Crust;
     });
 
-    it.only("Test min crumbs amount", async() => {
+    it("Test min crumbs amount", async() => {
         // Using chai-as-promised because waffle chai matchers seem not to be working with constructors
         // @ts-ignore
-        await expect((new CrustFactory(signers[0])).deploy([], "TEST", "TEST", 18)).to.be.rejectedWith("-VM Exception while processing transaction: revert Crust.constructor: Crust must at least have one crumb")
+        await expect((new CrustFactory(signers[0])).deploy([], "TEST", "TEST", 18)).to.be.rejectedWith("VM Exception while processing transaction: revert Crust.constructor: Crust must at least have one crumb");
+        // TODO make this test show up in the coverage report. (Low priority)
     });
 
     it("Test balance of", async() => {

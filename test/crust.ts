@@ -1,4 +1,4 @@
-import chai, { expect } from "chai";
+import chai from "chai";
 import { deployContract, solidity } from "ethereum-waffle";
 import { ethers } from "@nomiclabs/buidler";
 import { Signer, constants, BigNumber } from "ethers";
@@ -7,9 +7,13 @@ import { parseEther } from "ethers/lib/utils";
 import { MiniMeTokenFactory } from "../typechain/MiniMeTokenFactory";
 import { MiniMeToken } from "../typechain/MiniMeToken";
 import { Crust } from "../typechain/Crust";
+import { CrustFactory } from "../typechain/CrustFactory";
 import CrustArtifact from "../artifacts/Crust.json";
 
 chai.use(solidity);
+chai.use(require('chai-as-promised'));
+
+const expect = chai.expect;
 
 let account: string;
 let signers: Signer[];
@@ -45,6 +49,12 @@ describe("Pie Crust", function () {
         );
 
         crust = await (deployContract(signers[0], CrustArtifact, [[token0.address, token1.address], "CRUST", "CST", 18])) as Crust;
+    });
+
+    it.only("Test min crumbs amount", async() => {
+        // Using chai-as-promised because waffle chai matchers seem not to be working with constructors
+        // @ts-ignore
+        await expect((new CrustFactory(signers[0])).deploy([], "TEST", "TEST", 18)).to.be.rejectedWith("-VM Exception while processing transaction: revert Crust.constructor: Crust must at least have one crumb")
     });
 
     it("Test balance of", async() => {

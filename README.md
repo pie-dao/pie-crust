@@ -29,7 +29,7 @@ yarn coverage
 
 ## Deploy a Pie Crust
 
-There is currently only a buidler task to deploy a crust containing 2 tokens but this can easily be adapted to create multi ``crumb`` crusts. Be aware that making a Pie Crust with a lot might significantly increase gas usage which can potentially break your Aragon DAO.
+There is currently only a buidler task to deploy a crust containing 2 tokens but this can easily be adapted to create multi ``crumb`` crusts. Be aware that making a Pie Crust with a lot of crumbs might significantly increase gas usage which can potentially break your Aragon DAO.
 
 To deploy a pie-crust run the following command:
 

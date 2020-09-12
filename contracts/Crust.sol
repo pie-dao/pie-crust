@@ -23,30 +23,6 @@ contract Crust is IMiniMeToken {
     }
 
     /**
-    * @notice Tells the name of the token.
-    * @return The name of the token.
-    */
-    function name() public view returns (string) {
-        return name;
-    }
-
-    /**
-    * @notice Tells the symbol of the token.
-    * @return The symbol of the token.
-    */
-    function symbol() public view returns (string) {
-        return symbol;
-    }
-
-    /**
-    * @notice Tells the amount of decimals used by the token.
-    * @return The amount of decimals used.
-    */
-    function decimals() public view returns (uint8) {
-        return decimals;
-    }
-
-    /**
     * @notice Tells the balance of `_account`.
     * @param _account Address of the account.
     * @return The balance of the account.

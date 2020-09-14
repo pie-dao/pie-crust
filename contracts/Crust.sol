@@ -16,6 +16,7 @@ contract Crust is IMiniMeToken {
         require(_crumbs.length > 0, "Crust.constructor: Crust must at least have one crumb");
         for(uint256 i = 0; i < _crumbs.length; i ++) {
             crumbs.push(IMiniMeToken(_crumbs[i]));
+            require(crumbs[i].decimals() == _decimals, "Crumbs must have same number of decimals as crust");
         }
         name = _name;
         symbol = _symbol;
@@ -63,5 +64,13 @@ contract Crust is IMiniMeToken {
             result = result.add(crumbs[i].totalSupplyAt(_block));
         }
         return result;
+    }
+
+    /**
+    * @notice Gets the amount of decimals.
+    * @dev Necesary because otherwise typechain does not generate working artifacts
+    */
+    function decimals() external view returns(uint8) {
+        return decimals;
     }
 }

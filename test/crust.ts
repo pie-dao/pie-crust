@@ -60,6 +60,21 @@ describe("Pie Crust", function () {
         // TODO make this test show up in the coverage report. (Low priority)
     });
 
+    it("Test token decimals", async() => {
+        const token2 = await (new MiniMeTokenFactory(signers[0])).deploy(
+            constants.AddressZero,
+            constants.AddressZero,
+            0,
+            "TKN2",
+            8,
+            "TKN2",
+            true
+        );
+        // Using chai-as-promised because waffle chai matchers seem not to be working with constructors
+        // @ts-ignore
+        await expect((new CrustFactory(signers[0])).deploy([token0.address, token1.address, token2.address], "TEST", "TEST", 18)).to.be.rejectedWith("VM Exception while processing transaction: revert Crumbs must have same number of decimals as crust")
+    });
+
     it("Test balance of", async() => {
         await token0.generateTokens(account, parseEther("1337"));
         expect(await crust.balanceOf(account)).to.eq(parseEther("1337"));
